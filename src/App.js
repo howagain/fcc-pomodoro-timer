@@ -1,25 +1,30 @@
-import React, { useState, useEffect } from "react";
-import "./App.css";
+import React, { useState, useEffect, useRef } from "react";
+import "./App.scss";
+import SFX from "./Sounds/Elevator-ding-sound-effect.mp3";
 
 function App() {
   const [breakLength, setBreakLength] = useState(5);
   const [sessionLength, setSessionLength] = useState(59);
-  const [timeRemaining, setTimeRemaining] = useState(25*60);
+  const [timeRemaining, setTimeRemaining] = useState(25 * 60);
   const [isActive, setIsActive] = useState(false);
   const [isSession, setIsSession] = useState(true);
+  const audioRef = useRef(null);
 
   const formatTime = (seconds) => {
     let time = new Date(seconds * 1000);
-    if (time.getUTCHours() === 0){
+    if (time.getUTCHours() === 0) {
       return time.toISOString().substr(14, 5);
     } else {
-      return `${time.getUTCHours()*60+time.getMinutes()}:${time.toISOString().substr(17,2)}` //converts more than 1 hour to minutes
+      return `${
+        time.getUTCHours() * 60 + time.getMinutes()
+      }:${time.toISOString().substr(17, 2)}`; //converts more than 1 hour to minutes
     }
-  }
+  };
 
   useEffect(() => {
     let interval = null;
     if (timeRemaining === 0) {
+      audioRef.current.play();
       setTimeout(() => switchSession(), 1000);
     }
     if (isActive && timeRemaining > 0) {
@@ -51,22 +56,22 @@ function App() {
 
   const handleTimeChange = (toAdjust, change) => {
     switch (toAdjust) {
-        case "session":
-          if (sessionLength+change > 0 && sessionLength+change <= 60){
-            setSessionLength((prevState) => prevState + change);
-          }
-          break;
-        case "break":
-          if (breakLength+change > 0 && breakLength+change <= 60){
-            setBreakLength((prevState) => prevState + change);
-          }
-          break;
-        default:
-          console.error(
-            "Uh oh... You're trying to adjust the clock in a way that's not correct"
-          );
-          break;
-      }
+      case "session":
+        if (sessionLength + change > 0 && sessionLength + change <= 60) {
+          setSessionLength((prevState) => prevState + change);
+        }
+        break;
+      case "break":
+        if (breakLength + change > 0 && breakLength + change <= 60) {
+          setBreakLength((prevState) => prevState + change);
+        }
+        break;
+      default:
+        console.error(
+          "Uh oh... You're trying to adjust the clock in a way that's not correct"
+        );
+        break;
+    }
   };
 
   useEffect(() => {
@@ -80,11 +85,13 @@ function App() {
   }, [sessionLength, breakLength]);
 
   const resetTimer = () => {
+    audioRef.current.pause();
+    audioRef.current.currentTime = 0;
     setIsActive(false);
-    setIsSession(true);
     setSessionLength(25);
     setBreakLength(5);
     setTimeRemaining(25 * 60);
+    setIsSession(true);
   };
 
   return (
@@ -92,7 +99,7 @@ function App() {
       <header className="App-header">
         <h1 className="title">Pomodoro Clock</h1>
         <div className="break-controls">
-          <h2 className="option-label">Break Length</h2>
+          <h2 id="break-label" className="option-label">Break Length</h2>
           <button
             id="break-decrement"
             onClick={() => handleTimeChange("break", -1)}
@@ -110,7 +117,7 @@ function App() {
           </button>
         </div>
         <div className="session-controls">
-          <h2 className="option-label">Session Length</h2>
+          <h2 id="session-label" className="option-label">Session Length</h2>
           <button
             id="session-decrement"
             onClick={() => handleTimeChange("session", -1)}
@@ -128,12 +135,13 @@ function App() {
           </button>
         </div>
         <div className="timer-container">
-          <h2 id="timer-label">Time Remaining</h2>
+          <h2>Time Remaining</h2>
+          <p id="timer-label">{isSession ? "Session" : "Break"}</p>
           <p id="time-left">{formatTime(timeRemaining)}</p>
-          <button id="start" onClick={() => setIsActive(!isActive)}>
+          <button id="start_stop" onClick={() => setIsActive(!isActive)}>
             Toggle Timer
           </button>
-          <button id="start" onClick={resetTimer}>
+          <button id="reset" onClick={resetTimer}>
             Reset Timer
           </button>
           <button
@@ -143,7 +151,7 @@ function App() {
           >
             Set time to 1s
           </button>
-          <p>{isSession ? "session" : "break"}</p>
+          <audio id="beep" ref={audioRef} src={SFX}></audio>
         </div>
       </header>
     </div>
