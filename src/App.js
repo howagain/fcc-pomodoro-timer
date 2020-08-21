@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
-import Timer from "timer.js"
 import "./App.css";
 
 function App() {
   const [breakLength, setBreakLength] = useState(5);
   const [sessionLength, setSessionLength] = useState(25);
-  const [timeRemaining, setTimeRemaining] = useState(25*60);
+  const [timeRemaining, setTimeRemaining] = useState(5);
   const [isActive, setIsActive] = useState(false)
   const [isSession, setIsSession] = useState(true)
 
@@ -13,25 +12,16 @@ function App() {
 
   useEffect(() => {
     let interval = null;
-    if (isActive) {
+    if (isActive && timeRemaining !== 0) {
       interval = setInterval(() => {
         setTimeRemaining(timeRemaining => timeRemaining - 1);
       }, 1000);
-    } else if (!isActive || timeRemaining === 0) {
+    } else if (!isActive || timeRemaining <= 0) {
       clearInterval(interval);
     }
     return () => clearInterval(interval);
   }, [isActive, timeRemaining]);
 
-// const startClock = () => {
-//   timerJS.start(sessionLength)
-//   setIsActive(true)
-//   const clock = setInterval(()=>{setTimeRemaining(prevState=>prevState-1)},1000)
-//   if (isActive) {
-//     clearInterval(clock)
-//   }
-// }
-  
 
   return (
     <div className="App">
@@ -53,7 +43,7 @@ function App() {
           <h2 id="timer-label">Time Remaining</h2>
           <p id="time-left">{formatTime(timeRemaining)}</p>
           <button id="start" onClick={()=>setIsActive(!isActive)}>Toggle Timer</button>
-          <button id="start" >Start Timer</button>
+          <button id="start">Start Timer</button>
         </div>
       </header>
     </div>
