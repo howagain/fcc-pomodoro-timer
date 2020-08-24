@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/fcc-pomodoro-timer/static/css/main.7ae7c8e1.chunk.css",
+    "main.js": "/fcc-pomodoro-timer/static/js/main.b1fd3d9c.chunk.js",
+    "main.js.map": "/fcc-pomodoro-timer/static/js/main.b1fd3d9c.chunk.js.map",
+    "runtime-main.js": "/fcc-pomodoro-timer/static/js/runtime-main.64a75a16.js",
+    "runtime-main.js.map": "/fcc-pomodoro-timer/static/js/runtime-main.64a75a16.js.map",
+    "static/js/2.d24de510.chunk.js": "/fcc-pomodoro-timer/static/js/2.d24de510.chunk.js",
+    "static/js/2.d24de510.chunk.js.map": "/fcc-pomodoro-timer/static/js/2.d24de510.chunk.js.map",
+    "index.html": "/fcc-pomodoro-timer/index.html",
+    "precache-manifest.a1c79fa55b833190fafbdebd42ac4b79.js": "/fcc-pomodoro-timer/precache-manifest.a1c79fa55b833190fafbdebd42ac4b79.js",
+    "service-worker.js": "/fcc-pomodoro-timer/service-worker.js",
+    "static/css/main.7ae7c8e1.chunk.css.map": "/fcc-pomodoro-timer/static/css/main.7ae7c8e1.chunk.css.map",
+    "static/js/2.d24de510.chunk.js.LICENSE.txt": "/fcc-pomodoro-timer/static/js/2.d24de510.chunk.js.LICENSE.txt",
+    "static/media/Elevator-ding-sound-effect.mp3": "/fcc-pomodoro-timer/static/media/Elevator-ding-sound-effect.09bb07c0.mp3"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.64a75a16.js",
+    "static/js/2.d24de510.chunk.js",
+    "static/css/main.7ae7c8e1.chunk.css",
+    "static/js/main.b1fd3d9c.chunk.js"
+  ]
+}
